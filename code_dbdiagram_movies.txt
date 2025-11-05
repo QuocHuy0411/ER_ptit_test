@@ -1,0 +1,120 @@
+Table movie{
+  movie_id int [primary key, increment]
+  title varchar(1000) 
+  budget int 
+  homepage varchar(1000) 
+  overview varchar(1000)
+  popularity decimal(12,6)
+  release_date date
+  revenue bigint
+  runtime int
+  movie_status varchar(50)
+  tagline varchar(1000)
+  vote_average decimal(4,2)
+  vote_count int
+}
+
+table country{
+  country_id int [pk, increment]
+  country_iso_code varchar(10)
+  country_name varchar(200)
+}
+
+table department{
+  department_id int [pk, increment]
+  department_name varchar(200)
+}
+
+table gender{
+  gender_id int [pk]
+  gender varchar(20)
+}
+
+table genre{
+  genre_id int [pk]
+  genre_name varchar(100)
+}
+
+table keyword{
+  keyword_id int [pk]
+  keyword_name varchar(100)
+}
+
+table language{
+  language_id int [pk, increment]
+  language_code varchar(10)
+  language_name varchar(500)
+}
+
+table language_role{
+  role_id int [pk]
+  language_role varchar(20)
+}
+
+table movie_cast{
+  movie_id int
+  person_id int
+  character_name varchar(400)
+  gender_id int
+  cast_order int
+}
+
+table movie_company{
+  movie_id int
+  company_id int
+}
+
+table movie_crew{
+  movie_id int
+  person_id int
+  department_id int
+  job varchar(200)
+}
+
+table movie_genres{
+  movie_id int
+  genre_id int
+}
+
+table movie_keywords{
+  movie_id int
+  keyword_id int 
+}
+
+table movie_language{
+  movie_id int
+  languague_id int
+  language_role_id int
+}
+
+table person{
+  person_id int [pk]
+  person_name varchar(500)
+}
+
+table production_company{
+  company_id int
+  company_name varchar(200)
+}
+
+table production_country{
+  movie_id int
+  country_id int
+}
+ref fk_pc_country: production_country.country_id > country.country_id
+ref fk_pc_movie: production_country.movie_id > movie.movie_id
+ref fk_mca_gender: movie_cast.gender_id > gender.gender_id
+ref fk_mca_movie: movie_cast.movie_id > movie.movie_id
+ref fk_mca_per: movie_cast.person_id > person.person_id
+ref fk_mc_comp: movie_company.company_id > production_company.company_id
+ref fk_mc_movie: movie_company.movie_id > movie.movie_id
+ref fk_mcr_dept: movie_crew.department_id > department.department_id
+ref fk_mcr_movie: movie_crew.movie_id > movie.movie_id
+ref fk_mcr_per: movie_crew.person_id > person.person_id
+ref fk_mg_genre: movie_genres.genre_id > genre.genre_id
+ref fk_mg_movie: movie_genres.movie_id > movie.movie_id
+ref fk_mk_keyword: movie_keywords.keyword_id > keyword.keyword_id
+ref fk_mk_movie: movie_keywords.movie_id > movie.movie_id
+ref fk_ml_movie: movie_language.movie_id > movie.movie_id
+ref fk_ml_language: movie_language.languague_id > language.language_id
+ref fk_ml_role: movie_language.language_role_id > language_role.role_id
